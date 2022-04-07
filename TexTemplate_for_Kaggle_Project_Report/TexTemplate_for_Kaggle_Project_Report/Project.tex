@@ -1,0 +1,143 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{cite}
+
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{assumption}{Assumption}
+\newtheorem{corollary}{Corollary}
+\newtheorem{example}{Example}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{comment, bm, enumerate}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{wrapfig}
+% Example for wrapping text around a figure 
+% \begin{wrapfigure}{R}{0.3\textwidth}
+% \centering
+% \includegraphics[width=0.25\textwidth]{path_to_your_figure}
+% \caption{\label{label_of_your_figure}This is a figure caption.}
+% \end{wrapfigure}
+
+\usepackage{subfig}
+% Example for including multiple images into one figure
+% \begin{figure}
+%      \centering
+%      \begin{subfigure}[b]{0.3\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{path_to_your_graph1}
+%          \caption{caption_of_your_graph1}
+%          \label{label_of_your_graph1}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.3\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{path_to_your_graph2}
+%          \caption{caption_of_your_graph2}
+%          \label{label_of_your_graph2}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.3\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{path_to_your_graph3}
+%          \caption{caption_of_your_graph3}
+%          \label{label_of_your_graph3}
+%      \end{subfigure}
+%         \caption{Three graphs example}
+%         \label{fig:three graphs}
+% \end{figure}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+}
+
+\usepackage{booktabs, caption, makecell}
+\usepackage{threeparttable}
+
+\usepackage{listings}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+\lstset{framextopmargin=50pt,frame=bottomline}
+% Default BibTeX in apalike style, activate the following line:
+\bibliographystyle{apalike}
+
+% If you use natbib package, activate the following three lines:
+%\usepackage[round]{natbib}
+%\renewcommand{\bibname}{References}
+%\renewcommand{\bibsection}{\subsubsection*{\bibname}}
+
+\title{Template for Project Report}
+\author{CompSci 671\\
+Your name}
+\date{Date of submission}
+
+\begin{document}
+\maketitle
+
+% \section{Instructions}
+\noindent The report is due on Dec 10th. This should be individual work, and team collaboration is NOT allowed. The writing (not include references and appendix) is up to 10 pages, but could be shorter. Good luck!
+
+\section{Background}
+\subsection{Introduction}
+In this section, you will describe the background and motivation for your project. How did you come up with this problem? Why is this problem meaningful and important? \\
+~\\
+Please choose a topic that would allow you to learn a NEW skill that you wouldn't normally have learned in the course of your ordinary research. Please don't use work that you would have done anyway as the topic of this project. The topic is not limited to data analysis (classifications or predictions), and you are free to incorporate other goals, for example interpretability evaluation. As long as you incorporate concepts/algorithms from the class and we can clearly see that you use them methodically, your project is fair game.
+\subsection{Related Work}
+In this section, you will describe previous work related to your project. (This part is not necessary if you implement all baselines yourself.)\\
+~\\
+For example, was your dataset analyzed in previous papers? Is the algorithm you proposed comparable to other methods? Please introduce existing methods and state the advantages of your algorithm.
+\section{Methods}
+In this section, you will summarize the main results and key steps of your project.\\
+~\\
+\subsection{Model}
+In this section, you will describe the algorithm in detail and explain your intuition. \\
+~\\
+Specific motivation for choosing or proposing an algorithm may include computational efficiency, simple parameterization, ease of use, ease of training, the availability of high-quality libraries online, and many other possible reasons.
+\subsection{Hyper-parameter Selection}
+In this section, you will describe the hyper-parameters for your algorithm. (This part is not necessary if there is no hyper-parameter in your proposed model.) The hyper-parameters must be tuned according to some search or heuristic. You can plot the functional relation between validation accuracy and choices of hyper-parameters. \\
+~\\
+For example, hyper-parameters may be the number of trees for random forest, the regularization parameter for ridge regression or lasso, or the type of activation or number of neurons for neural networks.
+\section{Experiments}
+\subsection{Experimental Setup}
+In this section, you will describe the experimental design. If you are dealing with a real dataset, you can describe the dataset.
+\subsection{Evaluation Metrics}
+In this section, you will discuss the metrics that you will use to evaluate the model. If the metric is not one we learned in class, you can provide its definition and the reason for using it.\\
+~\\
+For example, you can let the model obey some constraints that make the model more interpretable. Whether your model obeys these constraints can be used as a performance metric.
+\subsection{Experimental Results}
+In this section, you will describe the experimental results in terms of evaluation metrics that are commonly used in the literature. It's better to have visualizations to help the reader understand your result. 
+
+\section{Errors and Mistakes}
+Making mistakes is a natural part of the process. If there were any steps or bugs that really slowed your progress, put them here!
+
+\section*{Citations}
+Make sure to cite all references that you use. For example, source of your dataset, the algorithm you use and the related work. If external programming libraries are used, you can describe them and identify the source or authors of the code.
+
+\section*{Code}
+\begin{lstlisting}
+Put your code here.
+\end{lstlisting}
+Include necessary comments so that the grader can understand what is going on. Points will be taken off if it is not clear. Your code should be executable with the installed libraries (with citations) and with only minor modifications.
+\end{document}

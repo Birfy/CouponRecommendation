@@ -1,0 +1,187 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{cite}
+
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{claim}{Claim}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{assumption}{Assumption}
+\newtheorem{corollary}{Corollary}
+\newtheorem{example}{Example}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\usepackage{gensymb}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{caption}
+\usepackage{comment, bm, enumerate}
+\usepackage[ruled,vlined]{algorithm2e}
+
+\usepackage{graphicx}
+\usepackage{wrapfig}
+% Example for wrapping text around a figure 
+% \begin{wrapfigure}{R}{0.3\textwidth}
+% \centering
+% \includegraphics[width=0.25\textwidth]{path_to_your_figure}
+% \caption{\label{label_of_your_figure}This is a figure caption.}
+% \end{wrapfigure}
+
+\usepackage{subfig}
+% Example for including multiple images into one figure
+% \begin{figure}
+%      \centering
+%      \begin{subfigure}[b]{0.3\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{path_to_your_graph1}
+%          \caption{caption_of_your_graph1}
+%          \label{label_of_your_graph1}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.3\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{path_to_your_graph2}
+%          \caption{caption_of_your_graph2}
+%          \label{label_of_your_graph2}
+%      \end{subfigure}
+%      \hfill
+%      \begin{subfigure}[b]{0.3\textwidth}
+%          \centering
+%          \includegraphics[width=\textwidth]{path_to_your_graph3}
+%          \caption{caption_of_your_graph3}
+%          \label{label_of_your_graph3}
+%      \end{subfigure}
+%         \caption{Three graphs example}
+%         \label{fig:three graphs}
+% \end{figure}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+}
+
+\usepackage{booktabs, caption, makecell}
+\usepackage{threeparttable}
+
+%Copy code
+\usepackage{listings}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+\lstset{framextopmargin=50pt,frame=bottomline}
+
+% Default BibTeX in apalike style, activate the following line:
+\bibliographystyle{apalike}
+% If you use natbib package, activate the following three lines:
+%\usepackage[round]{natbib}
+%\renewcommand{\bibname}{References}
+%\renewcommand{\bibsection}{\subsubsection*{\bibname}}
+
+\title{Kaggle InClass Competition Report for Coupon Recommendation}
+\author{CompSci 671\\
+Danyang Chen, Kaggle username: Birfied
+}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\begin{document}
+
+\maketitle
+
+\noindent Coupon recommendations are widely used in online platforms to attract customers. It is challenging for the business owners to find potential customers to provide coupons, so as to reduce advertising cost and maximize profits. Machine learning can be used to develop targeted coupon recommendstions for this purpose. In this report, I will analyze the Coupon Recommendation Dataset (\href{https://www.kaggle.com/c/duke-cs671-fall21-coupon-recommendation-data/}{Link}) to decide whether customers will accept a coupon based on their profile.
+
+\section{Exploratory Analysis}
+The training dataset has 10184 entries and 21 features. 12 of the features are objects, 4 are integers and 5 are floats. In this dataset, 57\% of people accept the coupon recommendation. First, some entries are missing values for some features, for example, Bar, Coffeehouse, Carryaway. Luckily, only less than 2\% of entries are missing either one of these features. There is no need to remove these features, so the missing ones are just filled with the average value of this feature. Then, the features with object values are replaced with integers. For the features Driving\_to, Passenger, Weather, Time, Coupon, Coupon validity, Gender, Maritalstatus, Occupation, the features can be replaced by a integer indicating a category. For the features Age, Education and Income, they should be sequentially maped to the categories, for example, lowest income correspoinds to 0 and highest income corresponds to 1. All the features values are normalized to between $0$ and $1$ using the MinMaxScaler in sklearn to make sure all the features contributes equally to the fitting of the model, which is required for some of machine learning models.
+
+\section{Methods}
+\subsection{Models}
+The models I choose for training are decision tree, random forest and SVC because they are well implemented and documented in the sklearn package. They have only a few number of tunable parameters, which are pretty easy to train. They are much faster than training neural networks.
+\subsection{Training}
+The decision tree model is trained by choosing the best split feature based on the gini index or entropy gain, until the data is completely classified or it reaches the maximum depth. In sciket-learn package, the CART algorisim is implemented. 
+
+The random forest model is trained by first obtaining a random decision tree on a subset of training data, and then find the best splitting features in a subset of all the features. The prediction will be the average vote of all the randomly generated trees.
+
+The support vector machine model split the data by finding the hyper-plane that maximize the distance from the decision boundary to the nearest training observations.
+
+The cross validation is done by first splitting the dataset into $k$ folds, then using one fold for testing and all other folds for training. Iterate over all folds for testing and average the accuracy over $k$ folds.
+
+The CPU time estimation for a 10-fold cross validation of these models on the dataset with 10184 entries are
+\begin{itemize}
+    \item Decision tree: 0.31s
+    \item Random forest: 6.83s
+    \item Support Vector Machine: 27.3s
+\end{itemize}
+
+\subsection{Hyper-parameter Selection}
+For decision tree model, the hyper parameters in consideration are criterion (splitting criterion, gini or entropy), splitter (best or random), max\_depth (maximum depth depth of the tree), min\_samples\_leaf (minimum numer of samples for splitting) and min\_samples\_split (minimum number samples required to be at a leaf node). The best parameters are
+\begin{itemize}
+    \item criterion: entropy
+    \item max\_depth: 10
+    \item min\_samples\_leaf: 1
+    \item min\_samples\_split: 10
+    \item splitter: random
+\end{itemize}
+
+For random forest model, the hyper parameters in consideration are n\_estimator (number of trees), criterion (splitting criterion, gini or entropy), max\_depth (maximum depth depth of the tree). The best parameters are
+\begin{itemize}
+    \item n\_estimator: 600
+    \item criterion: entropy
+    \item max\_depth: 30
+\end{itemize}
+
+For support vector machine model, the hyper parameters in consideration are C (regularization parameter), kernel ('linear', 'poly', 'rbf' or 'sigmoid'). The best parameters are
+\begin{itemize}
+    \item C: 4
+    \item kernel: rbf
+\end{itemize}
+
+\section{Results}
+The accuracy in these models are 
+\begin{itemize}
+    \item Decision tree: 0.771
+    \item Random forest: 0.829
+    \item Support Vector Machine: 0.815
+\end{itemize}
+
+Precision:
+\begin{itemize}
+    \item Decision tree: 0.815
+    \item Random forest: 0.763
+    \item Support Vector Machine: 0.730
+\end{itemize}
+
+Recall:
+\begin{itemize}
+    \item Decision tree: 0.719
+    \item Random forest: 0.768
+    \item Support Vector Machine: 0.739
+\end{itemize}
+
+The random forest model predicts the best accuracy.
+
+
+
+\section*{Citations}
+Sklearn (\href{}{scikit-learn.org})
+
+
+\section*{Code}
+\begin{lstlisting}
+Put your code here.
+\end{lstlisting}
+Include necessary comments so that the grader can understand what is going on. Points will be taken off if it is not clear. Your code should be executable with the installed libraries (with citations) and with only minor modifications.
+\end{document}
